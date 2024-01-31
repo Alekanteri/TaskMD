@@ -1,44 +1,54 @@
-import React from "react";
+import { FC, useState, useEffect } from "react";
 
-const ThemeChange: React.FC = () => {
-  const darkIcon = <span className="material-symbols-outlined">dark_mode</span>;
-  const lightIcon = (
-    <span className="material-symbols-outlined">light_mode</span>
+const ThemeChange: FC = (): JSX.Element => {
+  const [theme, setTheme] = useState<string | null>(
+    localStorage.getItem("app-theme"),
   );
-  const [theme, setTheme] = React.useState<string | null>(null);
 
-  React.useEffect(() => {
-    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      setTheme("dark");
+  const themeSwitcher = (curTheme: string | null) => {
+    if (curTheme == "dark") {
+      document.documentElement.classList.add("dark");
+    } else if (curTheme == "light") {
+      document.documentElement.classList.remove("dark");
     } else {
-      setTheme("light");
+      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
     }
-  }, []);
+  };
 
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
-      const newColorScheme = event.matches ? "dark" : "light";
-      setTheme(newColorScheme);
+      const newColorScheme: string | null = event.matches ? "dark" : "light";
+      themeSwitcher(newColorScheme);
     });
 
-  const handleChangeTheme = () => {
-    setTheme(theme == "dark" ? "light" : "dark");
+  const handleChangeTheme = (event: any) => {
+    localStorage.setItem("app-theme", event.target.value);
+    setTheme(localStorage.getItem("app-theme"));
   };
-  React.useEffect(() => {
-    if (theme == "dark") {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
+
+  useEffect(() => {
+    themeSwitcher(theme);
   }, [theme]);
+
   return (
-    <button
-      className="p-2 m-2 rounded-full bg-black border-none w-[40px] h-[40px] text-white"
-      onClick={handleChangeTheme}
-    >
-      {theme == "dark" ? darkIcon : lightIcon}
-    </button>
+    <>
+      <select
+        name="theme"
+        id="selectTheme"
+        defaultValue={theme as string}
+        onChange={handleChangeTheme}
+      >
+        <option value="light">Light</option>
+        <option value="dark">Dark</option>
+        <option value="system">System</option>
+      </select>
+      {theme}
+    </>
   );
 };
 
