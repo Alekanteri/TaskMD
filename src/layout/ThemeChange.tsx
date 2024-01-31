@@ -23,6 +23,7 @@ const ThemeChange: FC = (): JSX.Element => {
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (event) => {
       const newColorScheme: string | null = event.matches ? "dark" : "light";
+      localStorage.setItem("app-theme", newColorScheme);
       themeSwitcher(newColorScheme);
     });
 
