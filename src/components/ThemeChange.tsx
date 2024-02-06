@@ -1,11 +1,13 @@
-import { FC, useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 
-const ThemeChange: FC = (): JSX.Element => {
-  const [theme, setTheme] = useState<string | null>(
+type LocalStorageType = string | null;
+
+const ThemeChange: React.FC = (): JSX.Element => {
+  const [theme, setTheme] = useState<LocalStorageType>(
     localStorage.getItem("app-theme"),
   );
 
-  const themeSwitcher = (curTheme: string | null) => {
+  const themeSwitcher = (curTheme: LocalStorageType) => {
     if (curTheme == "dark") {
       document.documentElement.classList.add("dark");
     } else if (curTheme == "light") {
@@ -21,13 +23,13 @@ const ThemeChange: FC = (): JSX.Element => {
 
   window
     .matchMedia("(prefers-color-scheme: dark)")
-    .addEventListener("change", (event) => {
+    .addEventListener("change", (event: MediaQueryListEvent) => {
       const newColorScheme: string | null = event.matches ? "dark" : "light";
       localStorage.setItem("app-theme", newColorScheme);
       themeSwitcher(newColorScheme);
     });
 
-  const handleChangeTheme = (event: any) => {
+  const handleChangeTheme = (event: ChangeEvent<HTMLSelectElement>) => {
     localStorage.setItem("app-theme", event.target.value);
     setTheme(localStorage.getItem("app-theme"));
   };
@@ -38,17 +40,19 @@ const ThemeChange: FC = (): JSX.Element => {
 
   return (
     <>
-      <select
-        name="theme"
-        id="selectTheme"
-        defaultValue={theme as string}
-        onChange={handleChangeTheme}
-      >
-        <option value="light">Light</option>
-        <option value="dark">Dark</option>
-        <option value="system">System</option>
-      </select>
-      {theme}
+      <label className="relative">
+        <select
+          name="theme"
+          id="selectTheme"
+          defaultValue={theme as string}
+          onChange={handleChangeTheme}
+          className="optionSelector"
+        >
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+          <option value="system">System</option>
+        </select>
+      </label>
     </>
   );
 };

@@ -6,7 +6,7 @@ export default {
     colors: {
       "primary-bg-color": {
         light: "#f7f8fa",
-        dark: "#3d3d3d",
+        dark: "#1d1d1d",
       },
       "secondary-bg-color": {
         light: "#f0f1f3",
