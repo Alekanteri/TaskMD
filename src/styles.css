@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+/* * { */
+/*   border: 2px solid green; */
+/* } */
+
 html,
 body,
 #root {
@@ -9,7 +13,7 @@ body,
 }
 
 .navigationButton {
-  @apply py-2 px-4 transition-all hover:bg-purple-color;
+  @apply py-2 px-4 transition-all text-primary-text-color-light text-center rounded-lg hover:bg-purple-color hover:text-primary-text-color-dark dark:text-primary-text-color-dark;
 }
 
 .optionSelector {

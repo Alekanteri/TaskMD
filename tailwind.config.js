@@ -10,7 +10,7 @@ export default {
       },
       "secondary-bg-color": {
         light: "#f0f1f3",
-        dark: "#1d1d1d",
+        dark: "#3d3d3d",
       },
       "sidebar-bg-color": {
         light: "#ffffff",
