@@ -1,13 +1,18 @@
 import React from "react";
 
-type SettingsProps = {
-  children: React.ReactNode;
-};
+import { MenuButton } from "./MenuButton";
+import { CloseButton } from "./CloseButton";
 
-const Settigns: React.FC<SettingsProps> = ({
+interface SettingsProps {
+  children: React.ReactNode;
+}
+
+export type ModalRefType = HTMLDialogElement;
+
+export const Settigns: React.FC<SettingsProps> = ({
   children,
 }: SettingsProps): JSX.Element => {
-  const modalRef = React.useRef<HTMLDialogElement>(null);
+  const modalRef = React.useRef<ModalRefType>(null);
 
   const handleCloseModal = () => {
     modalRef.current!.close();
@@ -25,14 +30,10 @@ const Settigns: React.FC<SettingsProps> = ({
         ref={modalRef}
         className="relative place-items-center p-4 h-[60%] rounded-lg text-primary-text-color-light bg-primary-bg-color-light dark:text-primary-text-color-dark dark:bg-primary-bg-color-dark"
       >
-        <button className="absolute top-2 right-2" onClick={handleCloseModal}>
-          Close
-        </button>
+        <CloseButton onClick={handleCloseModal} />
         {children}
       </dialog>
-      <button onClick={handleOpenModal}>Open</button>
+      <MenuButton onClick={handleOpenModal} />
     </>
   );
 };
-
-export default Settigns;

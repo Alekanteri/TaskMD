@@ -1,10 +1,10 @@
-import React, { useState, useEffect, ChangeEvent } from "react";
+import React, { useState, useEffect } from "react";
 
 type LocalStorageType = string | null;
 
-const ThemeChange: React.FC = (): JSX.Element => {
+export const ThemeChange: React.FC = (): JSX.Element => {
   const [theme, setTheme] = useState<LocalStorageType>(
-    localStorage.getItem("app-theme"),
+    localStorage.getItem("app-theme")
   );
 
   const themeSwitcher = (curTheme: LocalStorageType) => {
@@ -29,7 +29,7 @@ const ThemeChange: React.FC = (): JSX.Element => {
       themeSwitcher(newColorScheme);
     });
 
-  const handleChangeTheme = (event: ChangeEvent<HTMLSelectElement>) => {
+  const handleChangeTheme = (event: React.ChangeEvent<HTMLSelectElement>) => {
     localStorage.setItem("app-theme", event.target.value);
     setTheme(localStorage.getItem("app-theme"));
   };
@@ -46,7 +46,7 @@ const ThemeChange: React.FC = (): JSX.Element => {
           id="selectTheme"
           defaultValue={theme as string}
           onChange={handleChangeTheme}
-          className="optionSelector"
+          className="optionSelector appearance-none bg-purple-color text-primary-text-color-dark border-none rounded-sm min-w-[100px] cursor-pointer px-1 bg-no-repeat focus:outline-none"
         >
           <option value="light">Light</option>
           <option value="dark">Dark</option>
@@ -56,5 +56,3 @@ const ThemeChange: React.FC = (): JSX.Element => {
     </>
   );
 };
-
-export default ThemeChange;
